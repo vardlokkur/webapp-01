@@ -26,15 +26,15 @@ import warlock.entities.domain.helpers.PositionListItemEntity;
 public class OptimizedNativeEmployerFetch extends AbstractEntityCommand<Employer, Long> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private transient EntityManager entityManager;
 
-    public OptimizedNativeEmployerFetch(Model model, ApplicationContext applicationContext) {
+    public OptimizedNativeEmployerFetch(final Model model, final ApplicationContext context) {
         super(model);
-        applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+        context.getAutowireCapableBeanFactory().autowireBean(this);
     }
 
     @Override
-    protected Object executeInternal(Long identifier) {
+    protected Object executeInternal(final Long identifier) {
         return entityManager
                         .createNativeQuery(
                                         "select P.ID as ID, ER.NAME AS EMPLOYER_NAME, P.NAME AS POSITION_NAME, EE.LAST_NAME || ', ' || EE.FIRST_NAME AS EMPLOYEE_NAME, AVG(S.AMOUNT) AS AVERAGE_SALARY "

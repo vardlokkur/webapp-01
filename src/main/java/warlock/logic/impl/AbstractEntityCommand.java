@@ -17,17 +17,17 @@ import warlock.logic.EntityCommand;
 public abstract class AbstractEntityCommand<E extends Identifiable<I>, I extends Serializable> implements
                 EntityCommand<E, I> {
 
-    private String attributeName;
+    private transient String attributeName;
 
-    private I identifier;
+    private transient I identifier;
 
-    private Model model;
+    private transient Model model;
 
     public AbstractEntityCommand() {
         super();
     }
 
-    public AbstractEntityCommand(Model model) {
+    public AbstractEntityCommand(final Model model) {
         this();
         this.model = model;
     }
@@ -41,17 +41,17 @@ public abstract class AbstractEntityCommand<E extends Identifiable<I>, I extends
 
     protected abstract Object executeInternal(I identifier);
 
-    public EntityCommand<E, I> intoAttribute(String attributeName) {
+    public EntityCommand<E, I> intoAttribute(final String attributeName) {
         this.attributeName = attributeName;
         return this;
     }
 
-    public EntityCommand<E, I> useReceiver(Model model) {
+    public EntityCommand<E, I> useReceiver(final Model model) {
         this.model = model;
         return this;
     }
 
-    public EntityCommand<E, I> withId(I identifier) {
+    public EntityCommand<E, I> withId(final I identifier) {
         this.identifier = identifier;
         return this;
     }

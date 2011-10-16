@@ -19,15 +19,15 @@ import warlock.entities.helpers.PositionListItem;
 public class OptimizedEmployerFetch extends AbstractEntityCommand<Employer, Long> {
 
     @PersistenceContext
-    private EntityManager entityManager;
+    private transient EntityManager entityManager;
 
-    public OptimizedEmployerFetch(Model model, ApplicationContext applicationContext) {
+    public OptimizedEmployerFetch(final Model model, final ApplicationContext context) {
         super(model);
-        applicationContext.getAutowireCapableBeanFactory().autowireBean(this);
+        context.getAutowireCapableBeanFactory().autowireBean(this);
     }
 
     @Override
-    protected Object executeInternal(Long identifier) {
+    protected Object executeInternal(final Long identifier) {
         return entityManager
                         .createQuery("select new warlock.entities.helpers.PositionListItem(er.name, p.name, concat(concat(ee.lastName, ', '), ee.firstName), AVG(s.amount)) "
                                         + "from Position p left outer join p.employer er left outer join p.employee ee left outer join ee.salaries as s "

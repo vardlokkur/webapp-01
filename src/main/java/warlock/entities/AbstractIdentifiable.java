@@ -21,7 +21,7 @@ public abstract class AbstractIdentifiable<T extends Serializable> implements Id
 
     @SuppressWarnings("rawtypes")
     @Override
-    public boolean equals(Object object) {
+    public boolean equals(final Object object) {
         boolean result = (this == object);
         if (!result && (null != object) && (getClass() == object.getClass())) {
             final Identifiable other = (Identifiable) object;
